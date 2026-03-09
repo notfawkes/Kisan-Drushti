@@ -1,57 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   Cpu,
   Activity,
   Droplets,
   Bug,
   CloudRain,
-  TrendingUp } from
-'lucide-react';
+  TrendingUp
+} from
+  'lucide-react';
 interface LoadingScreenProps {
   onComplete: () => void;
 }
-const agents = [
-{
-  id: 'crop',
-  name: 'Crop Monitoring',
-  icon: Activity,
-  color: 'text-emerald-400'
-},
-{
-  id: 'irrigation',
-  name: 'Smart Irrigation',
-  icon: Droplets,
-  color: 'text-blue-400'
-},
-{
-  id: 'pest',
-  name: 'Pest Detection',
-  icon: Bug,
-  color: 'text-red-400'
-},
-{
-  id: 'weather',
-  name: 'Weather Prediction',
-  icon: CloudRain,
-  color: 'text-cyan-400'
-},
-{
-  id: 'market',
-  name: 'Market Intelligence',
-  icon: TrendingUp,
-  color: 'text-yellow-400'
-},
-{
-  id: 'advisor',
-  name: 'Farm Advisor',
-  icon: Cpu,
-  color: 'text-purple-400'
-}];
 
 export function LoadingScreen({ onComplete }: LoadingScreenProps) {
+  const { t } = useTranslation();
   const [activeAgents, setActiveAgents] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
+
+  const agentsList = [
+    {
+      id: 'crop',
+      name: t('agents.crop'),
+      icon: Activity,
+      color: 'text-emerald-400'
+    },
+    {
+      id: 'irrigation',
+      name: t('agents.irrigation'),
+      icon: Droplets,
+      color: 'text-blue-400'
+    },
+    {
+      id: 'pest',
+      name: t('agents.pest'),
+      icon: Bug,
+      color: 'text-red-400'
+    },
+    {
+      id: 'weather',
+      name: t('agents.weather'),
+      icon: CloudRain,
+      color: 'text-cyan-400'
+    },
+    {
+      id: 'market',
+      name: t('agents.market'),
+      icon: TrendingUp,
+      color: 'text-yellow-400'
+    },
+    {
+      id: 'advisor',
+      name: t('agents.advisor'),
+      icon: Cpu,
+      color: 'text-purple-400'
+    }];
+
   useEffect(() => {
     let currentProgress = 0;
     const interval = setInterval(() => {
@@ -59,13 +64,13 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
       setProgress(currentProgress);
       if (currentProgress === 10) setActiveAgents((prev) => [...prev, 'crop']);
       if (currentProgress === 25)
-      setActiveAgents((prev) => [...prev, 'irrigation']);
+        setActiveAgents((prev) => [...prev, 'irrigation']);
       if (currentProgress === 40) setActiveAgents((prev) => [...prev, 'pest']);
       if (currentProgress === 55)
-      setActiveAgents((prev) => [...prev, 'weather']);
+        setActiveAgents((prev) => [...prev, 'weather']);
       if (currentProgress === 70) setActiveAgents((prev) => [...prev, 'market']);
       if (currentProgress === 85)
-      setActiveAgents((prev) => [...prev, 'advisor']);
+        setActiveAgents((prev) => [...prev, 'advisor']);
       if (currentProgress >= 100) {
         clearInterval(interval);
         setTimeout(onComplete, 800);
@@ -105,15 +110,15 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
         </div>
 
         <h1 className="text-3xl md:text-4xl font-bold text-zinc-100 mb-2 text-center tracking-tight">
-          Initializing Autonomous Farm
+          {t('loading.title')}
         </h1>
         <p className="text-zinc-400 mb-12 text-center">
-          Booting AI Agent Network...
+          {t('loading.booting')}
         </p>
 
         {/* Agent Initialization Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full mb-12">
-          {agents.map((agent) => {
+          {agentsList.map((agent) => {
             const isActive = activeAgents.includes(agent.id);
             const Icon = agent.icon;
             return (
@@ -127,8 +132,8 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
                   opacity: isActive ? 1 : 0.3,
                   y: isActive ? 0 : 10,
                   borderColor: isActive ?
-                  'rgba(16, 185, 129, 0.5)' :
-                  'rgba(39, 39, 42, 0.5)'
+                    'rgba(16, 185, 129, 0.5)' :
+                    'rgba(39, 39, 42, 0.5)'
                 }}
                 className={`flex items-center p-3 rounded-lg border bg-zinc-900/50 transition-all duration-500`}>
 
@@ -148,7 +153,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
                   <span
                     className={`text-[10px] ${isActive ? 'text-emerald-400' : 'text-zinc-700'}`}>
 
-                    {isActive ? 'Online' : 'Pending...'}
+                    {isActive ? t('common.online') : t('common.pending')}
                   </span>
                 </div>
               </motion.div>);
@@ -159,7 +164,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
         {/* Progress Bar */}
         <div className="w-full max-w-md">
           <div className="flex justify-between text-xs text-zinc-500 mb-2 font-mono">
-            <span>SYSTEM_STARTUP</span>
+            <span>{t('loading.systemStartup')}</span>
             <span>{progress}%</span>
           </div>
           <div className="h-1 w-full bg-zinc-900 rounded-full overflow-hidden">

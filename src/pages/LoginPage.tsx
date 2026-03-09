@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Label } from '../components/ui/Label';
@@ -8,6 +9,7 @@ interface LoginPageProps {
   onLogin: () => void;
 }
 export function LoginPage({ onLogin }: LoginPageProps) {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -51,24 +53,24 @@ export function LoginPage({ onLogin }: LoginPageProps) {
 
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-zinc-100 mb-2">
-              Agent Control Panel
+              {t('login.title')}
             </h1>
             <p className="text-zinc-400 text-sm">
-              Authenticate to access the autonomous network
+              {t('login.subtitle')}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-zinc-300">
-                Email Address
+                {t('login.emailLabel')}
               </Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
                 <Input
                   id="email"
                   type="email"
-                  placeholder="farmer@agriagent.ai"
+                  placeholder={t('login.emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 bg-zinc-950/50 border-zinc-800 focus-visible:ring-emerald-600 h-12"
@@ -80,13 +82,13 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password" className="text-zinc-300">
-                  Password
+                  {t('login.passwordLabel')}
                 </Label>
                 <a
                   href="#"
                   className="text-xs text-emerald-500 hover:text-emerald-400 transition-colors">
 
-                  Forgot password?
+                  {t('login.forgotPassword')}
                 </a>
               </div>
               <div className="relative">
@@ -94,7 +96,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t('login.passwordPlaceholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10 bg-zinc-950/50 border-zinc-800 focus-visible:ring-emerald-600 h-12"
@@ -109,13 +111,13 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-lg transition-all relative overflow-hidden group">
 
               {isLoading ?
-              <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2">
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  <span>Authenticating...</span>
+                  <span>{t('login.authenticating')}</span>
                 </div> :
 
-              <div className="flex items-center justify-center">
-                  <span>Initialize Connection</span>
+                <div className="flex items-center justify-center">
+                  <span>{t('login.initialize')}</span>
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </div>
               }
@@ -123,7 +125,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           </form>
 
           <div className="mt-8 text-center text-sm text-zinc-500">
-            Secure connection via gRPC • End-to-end encrypted
+            {t('login.secureText')}
           </div>
         </div>
       </motion.div>

@@ -1,6 +1,7 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../components/ui/Button';
+import { LanguageToggle } from '../components/LanguageToggle';
 import {
   ArrowRight,
   Cpu,
@@ -9,44 +10,49 @@ import {
   Bug,
   CloudRain,
   TrendingUp,
-  ShieldCheck } from
-'lucide-react';
+  ShieldCheck
+} from
+  'lucide-react';
 interface LandingPageProps {
   onLoginClick: () => void;
 }
-const features = [
-{
-  icon: Activity,
-  title: 'Crop Monitoring',
-  desc: 'Real-time health tracking via satellite and drone imagery.'
-},
-{
-  icon: Droplets,
-  title: 'Smart Irrigation',
-  desc: 'Optimize water usage based on soil moisture and weather.'
-},
-{
-  icon: Bug,
-  title: 'Pest Detection',
-  desc: 'Early warning system for diseases and pest infestations.'
-},
-{
-  icon: CloudRain,
-  title: 'Weather Prediction',
-  desc: 'Hyper-local climate risk forecasting.'
-},
-{
-  icon: TrendingUp,
-  title: 'Market Intelligence',
-  desc: 'Analyze price trends for optimal selling times.'
-},
-{
-  icon: Cpu,
-  title: 'Farm Advisor',
-  desc: 'Voice and mobile guidance for data-driven decisions.'
-}];
+
 
 export function LandingPage({ onLoginClick }: LandingPageProps) {
+  const { t } = useTranslation();
+
+  const featuresList = [
+    {
+      icon: Activity,
+      title: t('features.crop.title'),
+      desc: t('features.crop.desc')
+    },
+    {
+      icon: Droplets,
+      title: t('features.irrigation.title'),
+      desc: t('features.irrigation.desc')
+    },
+    {
+      icon: Bug,
+      title: t('features.pest.title'),
+      desc: t('features.pest.desc')
+    },
+    {
+      icon: CloudRain,
+      title: t('features.weather.title'),
+      desc: t('features.weather.desc')
+    },
+    {
+      icon: TrendingUp,
+      title: t('features.market.title'),
+      desc: t('features.market.desc')
+    },
+    {
+      icon: Cpu,
+      title: t('features.advisor.title'),
+      desc: t('features.advisor.desc')
+    }];
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-emerald-500/30">
       {/* Navbar */}
@@ -55,27 +61,28 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
           <div className="flex items-center space-x-2">
             <Cpu className="w-6 h-6 text-emerald-500" />
             <span className="font-bold text-lg tracking-tight">
-              AgriAgent AI
+              {t('common.appName')}
             </span>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <LanguageToggle />
             <Button
               variant="ghost"
               className="hidden sm:inline-flex text-zinc-300 hover:text-white">
 
-              Features
+              {t('common.features')}
             </Button>
             <Button
               variant="ghost"
               className="hidden sm:inline-flex text-zinc-300 hover:text-white">
 
-              How it Works
+              {t('common.howItWorks')}
             </Button>
             <Button
               onClick={onLoginClick}
               className="bg-emerald-600 hover:bg-emerald-700 text-white border-none">
 
-              Access Dashboard
+              {t('common.accessDashboard')}
             </Button>
           </div>
         </div>
@@ -103,7 +110,7 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
               className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-950/50 border border-emerald-800/50 text-emerald-400 text-sm font-medium mb-8">
 
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>System Online: 6 Agents Active</span>
+              <span>{t('common.systemOnline')}</span>
             </motion.div>
 
             <motion.h1
@@ -121,9 +128,9 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
               }}
               className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
 
-              The Future of Farming is{' '}
+              {t('landing.heroTitlePrefix')}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
-                Autonomous
+                {t('landing.heroTitleHighlight')}
               </span>
             </motion.h1>
 
@@ -142,9 +149,7 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
               }}
               className="text-xl text-zinc-400 mb-10 max-w-2xl mx-auto leading-relaxed">
 
-              A collaborative network of 6 specialized AI agents continuously
-              monitoring, analyzing, and optimizing your farm's operations in
-              real-time.
+              {t('landing.heroDesc')}
             </motion.p>
 
             <motion.div
@@ -167,14 +172,14 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
                 onClick={onLoginClick}
                 className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white h-12 px-8 text-lg">
 
-                Start Monitoring <ArrowRight className="ml-2 w-5 h-5" />
+                {t('landing.startMonitoring')} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="w-full sm:w-auto border-zinc-700 text-zinc-300 hover:bg-zinc-800 h-12 px-8 text-lg">
 
-                View Demo
+                {t('landing.viewDemo')}
               </Button>
             </motion.div>
           </div>
@@ -195,7 +200,7 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
             }}
             className="mt-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            {features.map((feature, idx) => {
+            {featuresList.map((feature, idx) => {
               const Icon = feature.icon;
               return (
                 <div
@@ -231,7 +236,7 @@ export function LandingPage({ onLoginClick }: LandingPageProps) {
             className="mt-24 flex items-center justify-center space-x-2 text-zinc-500 text-sm">
 
             <ShieldCheck className="w-4 h-4" />
-            <span>End-to-end encrypted • gRPC optimized • 99.9% Uptime</span>
+            <span>{t('landing.trustBadge')}</span>
           </motion.div>
         </div>
       </main>

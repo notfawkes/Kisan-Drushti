@@ -1,0 +1,85 @@
+{
+    "common": {
+        "appName": "Kishan Drishthi",
+        "networkActive": "Network Active",
+        "disconnect": "Disconnect",
+        "features": "Features",
+        "howItWorks": "How it Works",
+        "accessDashboard": "Access Dashboard",
+        "online": "Online",
+        "pending": "Pending...",
+        "systemOnline": "System Online: 6 Agents Active"
+    },
+    "landing": {
+        "heroTitlePrefix": "The Future of Farming is ",
+        "heroTitleHighlight": "Autonomous",
+        "heroDesc": "A collaborative network of 6 specialized AI agents continuously monitoring, analyzing, and optimizing your farm's operations in real-time.",
+        "startMonitoring": "Start Monitoring",
+        "viewDemo": "View Demo",
+        "trustBadge": "End-to-end encrypted • gRPC optimized • 99.9% Uptime"
+    },
+    "features": {
+        "crop": {
+            "title": "Crop Monitoring",
+            "desc": "Real-time health tracking via satellite and drone imagery."
+        },
+        "irrigation": {
+            "title": "Smart Irrigation",
+            "desc": "Optimize water usage based on soil moisture and weather."
+        },
+        "pest": {
+            "title": "Pest Detection",
+            "desc": "Early warning system for diseases and pest infestations."
+        },
+        "weather": {
+            "title": "Weather Prediction",
+            "desc": "Hyper-local climate risk forecasting."
+        },
+        "market": {
+            "title": "Market Intelligence",
+            "desc": "Analyze price trends for optimal selling times."
+        },
+        "advisor": {
+            "title": "Farm Advisor",
+            "desc": "Voice and mobile guidance for data-driven decisions."
+        }
+    },
+    "loading": {
+        "title": "Initializing Autonomous Farm",
+        "booting": "Booting AI Agent Network...",
+        "systemStartup": "SYSTEM_STARTUP"
+    },
+    "login": {
+        "title": "Agent Control Panel",
+        "subtitle": "Authenticate to access the autonomous network",
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "farmer@agriagent.ai",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "••••••••",
+        "forgotPassword": "Forgot password?",
+        "authenticating": "Authenticating...",
+        "initialize": "Initialize Connection",
+        "secureText": "Secure connection via gRPC • End-to-end encrypted"
+    },
+    "dashboard": {
+        "title": "Autonomous Operations",
+        "subtitle": "Monitoring 6 active AI agents across the farm network.",
+        "protocol": "Protocol: gRPC",
+        "latency": "Latency: 12ms",
+        "systemLogs": "System Logs",
+        "manualSync": "Manual sync requested. Polling all agents..."
+    },
+    "agents": {
+        "crop": "Crop Monitoring Agent",
+        "irrigation": "Smart Irrigation Agent",
+        "pest": "Pest Detection Agent",
+        "weather": "Weather Prediction Model",
+        "market": "Market Intelligence Model",
+        "advisor": "Farm Advisor Agent"
+    },
+    "chatbot": {
+        "title": "Farm Advisor",
+        "placeholder": "Ask the advisor...",
+        "hello": "Hello! I am your Farm Advisor Agent. How can I assist you today?"
+    }
+}
