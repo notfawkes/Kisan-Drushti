@@ -90,5 +90,12 @@
         "title": "Farm Advisor",
         "placeholder": "Ask the advisor...",
         "hello": "Hello! I am your Farm Advisor Agent. How can I assist you today?"
+    },
+    "notifications": {
+        "title": "Notifications",
+        "item1": "System backup completed successfully.",
+        "item2": "Crop Monitor scan verified 99% area coverage.",
+        "item3": "Slight anomaly in humidity sensor node 4.",
+        "markAllRead": "Mark all as read"
     }
 }

@@ -21,6 +21,7 @@ interface AgentCardProps {
   }[];
   suggestion?: string;
   delay?: number;
+  onClick?: () => void;
 }
 export function AgentCard({
   title,
@@ -28,7 +29,8 @@ export function AgentCard({
   icon,
   metrics,
   suggestion,
-  delay = 0
+  delay = 0,
+  onClick
 }: AgentCardProps) {
   const { t } = useTranslation();
   const getIcon = () => {
@@ -76,7 +78,10 @@ export function AgentCard({
         delay
       }}>
 
-      <Card className="h-full border-zinc-800/50 bg-zinc-900/40 hover:bg-zinc-900/60 transition-colors relative overflow-hidden group">
+      <Card
+        onClick={onClick}
+        className={`h-full border-zinc-800/50 bg-zinc-900/40 hover:bg-zinc-900/60 transition-colors relative overflow-hidden group ${onClick ? 'cursor-pointer hover:border-emerald-500/30' : ''}`}
+      >
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
           <div className="flex items-center space-x-2">

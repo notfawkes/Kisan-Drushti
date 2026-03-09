@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { AgentCard } from '../components/AgentCard';
 import { AiSuggestion } from '../components/AiSuggestion';
+import { NotificationsPanel } from '../components/NotificationsPanel';
+import { AgentEditModal, Metric } from '../components/AgentEditModal';
 import { Chatbot } from '../components/Chatbot';
 import { Button } from '../components/ui/Button';
 import { LanguageToggle } from '../components/LanguageToggle';
@@ -13,6 +15,56 @@ interface DashboardProps {
 export function Dashboard({ onLogout }: DashboardProps) {
   const { t } = useTranslation();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [editingAgent, setEditingAgent] = useState<'crop' | 'irrigation' | 'pest' | 'weather' | 'market' | 'advisor' | null>(null);
+
+  const [metricsState, setMetricsState] = useState<Record<string, Metric[]>>({
+    crop: [
+      { label: 'NDVI Score', value: '0.82 (Healthy)' },
+      { label: 'Growth Stage', value: 'Vegetative' },
+      { label: 'Last Scan', value: '2 mins ago' },
+      { label: 'Confidence', value: '98.5%' }
+    ],
+    irrigation: [
+      { label: 'Soil Moisture', value: '42% (Optimal)' },
+      { label: 'Water Usage', value: '1.2k L/day' },
+      { label: 'Next Cycle', value: 'Paused (Rain)' },
+      { label: 'Valve Status', value: 'Closed' }
+    ],
+    pest: [
+      { label: 'Threat Level', value: 'Low' },
+      { label: 'Scanned Area', value: '142 Acres' },
+      { label: 'Detections', value: '0 Critical' },
+      { label: 'Drone Status', value: 'Charging' }
+    ],
+    weather: [
+      { label: 'Current Temp', value: '24°C' },
+      { label: 'Precipitation', value: '80% (Tomorrow)' },
+      { label: 'Wind Speed', value: '12 km/h' },
+      { label: 'Humidity', value: '65%' }
+    ],
+    market: [
+      { label: 'Wheat Price', value: '$280/ton (↑)' },
+      { label: 'Soybean Price', value: '$420/ton (↓)' },
+      { label: 'Trend Analysis', value: 'Bullish' },
+      { label: 'Last Update', value: '1 hr ago' }
+    ],
+    advisor: [
+      { label: 'Active Queries', value: '0' },
+      { label: 'Recommendations', value: '2 Pending' },
+      { label: 'Language', value: 'English (Auto)' },
+      { label: 'Model', value: 'GPT-4 Optimized' }
+    ]
+  });
+
+  const handleSaveMetrics = (newMetrics: Metric[]) => {
+    if (editingAgent) {
+      setMetricsState(prev => ({
+        ...prev,
+        [editingAgent]: newMetrics
+      }));
+    }
+  };
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -51,6 +103,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
             <Button
               variant="ghost"
               size="icon"
+              onClick={() => setIsNotificationsOpen(true)}
               className="text-zinc-400 hover:text-zinc-100 relative">
 
               <Bell className="w-5 h-5" />
@@ -101,150 +154,54 @@ export function Dashboard({ onLogout }: DashboardProps) {
             status="active"
             icon="crop"
             delay={0.1}
-            metrics={[
-              {
-                label: 'NDVI Score',
-                value: '0.82 (Healthy)'
-              },
-              {
-                label: 'Growth Stage',
-                value: 'Vegetative'
-              },
-              {
-                label: 'Last Scan',
-                value: '2 mins ago'
-              },
-              {
-                label: 'Confidence',
-                value: '98.5%'
-              }]
-            }
-            suggestion={t('agents.cropSuggestion')} />
+            metrics={metricsState.crop}
+            suggestion={t('agents.cropSuggestion')}
+            onClick={() => setEditingAgent('crop')} />
 
           <AgentCard
             title={t('agents.irrigation')}
             status="processing"
             icon="irrigation"
             delay={0.2}
-            metrics={[
-              {
-                label: 'Soil Moisture',
-                value: '42% (Optimal)'
-              },
-              {
-                label: 'Water Usage',
-                value: '1.2k L/day'
-              },
-              {
-                label: 'Next Cycle',
-                value: 'Paused (Rain)'
-              },
-              {
-                label: 'Valve Status',
-                value: 'Closed'
-              }]
-            }
-            suggestion={t('agents.irrigationSuggestion')} />
+            metrics={metricsState.irrigation}
+            suggestion={t('agents.irrigationSuggestion')}
+            onClick={() => setEditingAgent('irrigation')} />
 
           <AgentCard
             title={t('agents.pest')}
             status="active"
             icon="pest"
             delay={0.3}
-            metrics={[
-              {
-                label: 'Threat Level',
-                value: 'Low'
-              },
-              {
-                label: 'Scanned Area',
-                value: '142 Acres'
-              },
-              {
-                label: 'Detections',
-                value: '0 Critical'
-              },
-              {
-                label: 'Drone Status',
-                value: 'Charging'
-              }]
-            }
-            suggestion={t('agents.pestSuggestion')} />
+            metrics={metricsState.pest}
+            suggestion={t('agents.pestSuggestion')}
+            onClick={() => setEditingAgent('pest')} />
 
           <AgentCard
             title={t('agents.weather')}
             status="active"
             icon="weather"
             delay={0.4}
-            metrics={[
-              {
-                label: 'Current Temp',
-                value: '24°C'
-              },
-              {
-                label: 'Precipitation',
-                value: '80% (Tomorrow)'
-              },
-              {
-                label: 'Wind Speed',
-                value: '12 km/h'
-              },
-              {
-                label: 'Humidity',
-                value: '65%'
-              }]
-            }
-            suggestion={t('agents.weatherSuggestion')} />
+            metrics={metricsState.weather}
+            suggestion={t('agents.weatherSuggestion')}
+            onClick={() => setEditingAgent('weather')} />
 
           <AgentCard
             title={t('agents.market')}
             status="idle"
             icon="market"
             delay={0.5}
-            metrics={[
-              {
-                label: 'Wheat Price',
-                value: '$280/ton (↑)'
-              },
-              {
-                label: 'Soybean Price',
-                value: '$420/ton (↓)'
-              },
-              {
-                label: 'Trend Analysis',
-                value: 'Bullish'
-              },
-              {
-                label: 'Last Update',
-                value: '1 hr ago'
-              }]
-            }
-            suggestion={t('agents.marketSuggestion')} />
+            metrics={metricsState.market}
+            suggestion={t('agents.marketSuggestion')}
+            onClick={() => setEditingAgent('market')} />
 
           <AgentCard
             title={t('agents.advisor')}
             status="active"
             icon="advisor"
             delay={0.6}
-            metrics={[
-              {
-                label: 'Active Queries',
-                value: '0'
-              },
-              {
-                label: 'Recommendations',
-                value: '2 Pending'
-              },
-              {
-                label: 'Language',
-                value: 'English (Auto)'
-              },
-              {
-                label: 'Model',
-                value: 'GPT-4 Optimized'
-              }]
-            }
-            suggestion={t('agents.advisorSuggestion')} />
+            metrics={metricsState.advisor}
+            suggestion={t('agents.advisorSuggestion')}
+            onClick={() => setEditingAgent('advisor')} />
 
         </div>
 
@@ -270,6 +227,21 @@ export function Dashboard({ onLogout }: DashboardProps) {
 
       {/* Floating Chatbot */}
       <Chatbot />
+
+      {/* Slide-over Notifications */}
+      <NotificationsPanel
+        isOpen={isNotificationsOpen}
+        onClose={() => setIsNotificationsOpen(false)}
+      />
+
+      {/* Edit Metrics Modal */}
+      <AgentEditModal
+        isOpen={editingAgent !== null}
+        onClose={() => setEditingAgent(null)}
+        onSave={handleSaveMetrics}
+        title={editingAgent ? t(`agents.${editingAgent}`) : ''}
+        initialMetrics={editingAgent ? metricsState[editingAgent] : []}
+      />
     </div>);
 
 }
