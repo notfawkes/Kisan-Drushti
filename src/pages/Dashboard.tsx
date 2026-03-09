@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { AgentCard } from '../components/AgentCard';
-import { SystemLogs } from '../components/SystemLogs';
+import { AiSuggestion } from '../components/AiSuggestion';
 import { Chatbot } from '../components/Chatbot';
 import { Button } from '../components/ui/Button';
 import { LanguageToggle } from '../components/LanguageToggle';
@@ -12,98 +12,11 @@ interface DashboardProps {
 }
 export function Dashboard({ onLogout }: DashboardProps) {
   const { t } = useTranslation();
-  const [logs, setLogs] = useState<any[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  useEffect(() => {
-    // Simulate initial logs
-    const initialLogs = [
-      {
-        id: '1',
-        timestamp: new Date().toLocaleTimeString(),
-        level: 'info',
-        message: 'System initialized. Connecting to Message Broker...',
-        agent: 'System'
-      },
-      {
-        id: '2',
-        timestamp: new Date().toLocaleTimeString(),
-        level: 'success',
-        message: 'gRPC connection established. 200 OK.',
-        agent: 'Network'
-      },
-      {
-        id: '3',
-        timestamp: new Date().toLocaleTimeString(),
-        level: 'info',
-        message: 'Fetching initial telemetry data...',
-        agent: 'Crop Monitoring'
-      }];
 
-    setLogs(initialLogs);
-    // Simulate real-time logs
-    const interval = setInterval(() => {
-      const newLog = generateRandomLog();
-      setLogs((prev) => [...prev, newLog].slice(-50)); // Keep last 50 logs
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-  const generateRandomLog = () => {
-    const agents = [
-      'Crop Monitoring',
-      'Irrigation Control',
-      'Pest Control',
-      'Weather Model',
-      'Market Model'];
-
-    const messages = [
-      {
-        level: 'info',
-        msg: 'Analyzing satellite imagery sector 4.'
-      },
-      {
-        level: 'success',
-        msg: 'Soil moisture optimal. Irrigation paused.'
-      },
-      {
-        level: 'warning',
-        msg: 'Minor anomaly detected in leaf spectral signature. Monitoring.'
-      },
-      {
-        level: 'info',
-        msg: 'Updated 7-day precipitation forecast.'
-      },
-      {
-        level: 'success',
-        msg: 'Market price for soybeans increased by 2.4%.'
-      },
-      {
-        level: 'error',
-        msg: 'Sensor node 12 timeout. Retrying connection...'
-      }];
-
-    const randomAgent = agents[Math.floor(Math.random() * agents.length)];
-    const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-    return {
-      id: Date.now().toString(),
-      timestamp: new Date().toLocaleTimeString(),
-      level: randomMsg.level as any,
-      message: randomMsg.msg,
-      agent: randomAgent
-    };
-  };
   const handleRefresh = () => {
     setIsRefreshing(true);
     setTimeout(() => setIsRefreshing(false), 1000);
-    setLogs((prev) => [
-      ...prev,
-      {
-        id: Date.now().toString(),
-        timestamp: new Date().toLocaleTimeString(),
-        level: 'info',
-        message: t('dashboard.manualSync'),
-        agent: 'System'
-      }]
-    );
   };
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-emerald-500/30">
@@ -205,7 +118,8 @@ export function Dashboard({ onLogout }: DashboardProps) {
                 label: 'Confidence',
                 value: '98.5%'
               }]
-            } />
+            }
+            suggestion={t('agents.cropSuggestion')} />
 
           <AgentCard
             title={t('agents.irrigation')}
@@ -229,7 +143,8 @@ export function Dashboard({ onLogout }: DashboardProps) {
                 label: 'Valve Status',
                 value: 'Closed'
               }]
-            } />
+            }
+            suggestion={t('agents.irrigationSuggestion')} />
 
           <AgentCard
             title={t('agents.pest')}
@@ -253,7 +168,8 @@ export function Dashboard({ onLogout }: DashboardProps) {
                 label: 'Drone Status',
                 value: 'Charging'
               }]
-            } />
+            }
+            suggestion={t('agents.pestSuggestion')} />
 
           <AgentCard
             title={t('agents.weather')}
@@ -277,7 +193,8 @@ export function Dashboard({ onLogout }: DashboardProps) {
                 label: 'Humidity',
                 value: '65%'
               }]
-            } />
+            }
+            suggestion={t('agents.weatherSuggestion')} />
 
           <AgentCard
             title={t('agents.market')}
@@ -301,7 +218,8 @@ export function Dashboard({ onLogout }: DashboardProps) {
                 label: 'Last Update',
                 value: '1 hr ago'
               }]
-            } />
+            }
+            suggestion={t('agents.marketSuggestion')} />
 
           <AgentCard
             title={t('agents.advisor')}
@@ -325,11 +243,12 @@ export function Dashboard({ onLogout }: DashboardProps) {
                 label: 'Model',
                 value: 'GPT-4 Optimized'
               }]
-            } />
+            }
+            suggestion={t('agents.advisorSuggestion')} />
 
         </div>
 
-        {/* System Logs Section */}
+        {/* AI Insight Section */}
         <motion.div
           initial={{
             opacity: 0,
@@ -345,7 +264,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
           }}
           className="mt-8">
 
-          <SystemLogs logs={logs} />
+          <AiSuggestion />
         </motion.div>
       </main>
 

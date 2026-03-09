@@ -1,5 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import {
   Activity,
@@ -7,8 +7,10 @@ import {
   Bug,
   CloudRain,
   TrendingUp,
-  Cpu } from
-'lucide-react';
+  Cpu,
+  Lightbulb
+} from
+  'lucide-react';
 interface AgentCardProps {
   title: string;
   status: 'active' | 'idle' | 'processing';
@@ -17,6 +19,7 @@ interface AgentCardProps {
     label: string;
     value: string;
   }[];
+  suggestion?: string;
   delay?: number;
 }
 export function AgentCard({
@@ -24,8 +27,10 @@ export function AgentCard({
   status,
   icon,
   metrics,
+  suggestion,
   delay = 0
 }: AgentCardProps) {
+  const { t } = useTranslation();
   const getIcon = () => {
     switch (icon) {
       case 'crop':
@@ -88,7 +93,7 @@ export function AgentCard({
         <CardContent>
           <div className="grid grid-cols-2 gap-4 mt-4">
             {metrics.map((metric, idx) =>
-            <div key={idx} className="flex flex-col space-y-1">
+              <div key={idx} className="flex flex-col space-y-1">
                 <span className="text-xs text-zinc-500">{metric.label}</span>
                 <span className="text-sm font-medium text-zinc-300">
                   {metric.value}
@@ -96,6 +101,19 @@ export function AgentCard({
               </div>
             )}
           </div>
+          {suggestion && (
+            <div className="mt-5 pt-4 border-t border-zinc-800/50">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-900/30 flex items-center justify-center shrink-0">
+                  <Lightbulb className="w-4 h-4 text-emerald-400" />
+                </div>
+                <div>
+                  <span className="text-xs font-semibold text-emerald-400 block mb-1">{t('dashboard.aiSuggestion')}</span>
+                  <p className="text-xs text-zinc-400 leading-relaxed">{suggestion}</p>
+                </div>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </motion.div>);

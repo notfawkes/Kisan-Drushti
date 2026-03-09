@@ -67,7 +67,10 @@
         "protocol": "Protocol: gRPC",
         "latency": "Latency: 12ms",
         "systemLogs": "System Logs",
-        "manualSync": "Manual sync requested. Polling all agents..."
+        "manualSync": "Manual sync requested. Polling all agents...",
+        "aiInsightTitle": "System Insights",
+        "aiSuggestion": "AI Suggestion",
+        "aiSuggestionText": "Based on current data, your farm's health is optimal. Consider scheduling irrigation for sector 4 tomorrow morning to maintain soil moisture."
     },
     "agents": {
         "crop": "Crop Monitoring Agent",
@@ -75,7 +78,13 @@
         "pest": "Pest Detection Agent",
         "weather": "Weather Prediction Model",
         "market": "Market Intelligence Model",
-        "advisor": "Farm Advisor Agent"
+        "advisor": "Farm Advisor Agent",
+        "cropSuggestion": "Consider adjusting fertilizer distribution in sector 3.",
+        "irrigationSuggestion": "Moisture dropping in sector 2; schedule watering.",
+        "pestSuggestion": "No immediate threats detected. Maintain current drone patrols.",
+        "weatherSuggestion": "Heavy rain expected tomorrow. Delay pesticide application.",
+        "marketSuggestion": "Prices are currently high. Consider selling portions of yield.",
+        "advisorSuggestion": "Review recent system insights for further optimization opportunities."
     },
     "chatbot": {
         "title": "Farm Advisor",
